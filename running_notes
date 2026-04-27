@@ -58,3 +58,8 @@ Apr 27 16:28:49 mongodb mongod[28738]: {"t":{"$date":"2026-04-27T16:28:49.150+0>
 Apr 27 16:28:49 mongodb mongod[28738]: {"t":{"$date":"2026-04-27T16:28:49.226+0>
 [admin@mongodb mongodb8]$
 
+[admin@mongodb mongodb8]$ ps -ef|grep -i mongod
+mongod     28738       1  1 16:28 ?        00:00:03 /usr/bin/mongod -f /etc/mongod.conf
+admin      28817    1710  0 16:32 pts/0    00:00:00 grep --color=auto -i mongod
+[admin@mongodb mongodb8]$
+
