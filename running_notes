@@ -80,3 +80,9 @@ Updating / installing...
    1:mongodb-mongosh-2.8.2-1.el8      ################################# [100%]
 [admin@mongodb software]$
 
+
+Connect to MongoDB:
+
+[admin@mongodb software]$ mongosh
+
+
