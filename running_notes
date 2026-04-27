@@ -24,3 +24,15 @@ total 89400
 -rw-r--r--. 1 admin admin 51168662 Apr 16 20:23 mongodb-org-server-8.2.7-1.el9.x86_64.rpm
 [admin@mongodb mongodb8]$
 
+Install MongoDB:
+
+[admin@mongodb mongodb8]$ sudo rpm -ivh  mongodb-org-server-8.2.7-1.el9.x86_64.rpm
+[sudo] password for admin:
+warning: mongodb-org-server-8.2.7-1.el9.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID 4e7dca05: NOKEY
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-org-server-8.2.7-1.el9   ################################# [100%]
+Created symlink /etc/systemd/system/multi-user.target.wants/mongod.service → /usr/lib/systemd/system/mongod.service.
+[admin@mongodb mongodb8]$
+
