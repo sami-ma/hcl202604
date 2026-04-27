@@ -85,4 +85,29 @@ Connect to MongoDB:
 
 [admin@mongodb software]$ mongosh
 
+Enable Remote Connection in MongoDB Server:
+
+Open mongodb configuration file in nano editor using following command.
+
+[admin@mongodb software]$ sudo nano /etc/mongod.conf
+
+Make followng changes
+
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+
+Press CTRL+s to save  and CTRL+x exit
+
+Once changes are done restart mongodb service:
+
+[admin@mongodb software]$ sudo systemctl restart mongod.service
+[sudo] password for admin:
+
+[admin@mongodb software]$ ps -ef|grep -i mongod
+mongod     29108       1  6 16:52 ?        00:00:01 /usr/bin/mongod -f /etc/mongod.conf
+admin      29189    1710  0 16:52 pts/0    00:00:00 grep --color=auto -i mongod
+[admin@mongodb software]$
+
+
 
