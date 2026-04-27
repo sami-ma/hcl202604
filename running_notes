@@ -63,3 +63,20 @@ mongod     28738       1  1 16:28 ?        00:00:03 /usr/bin/mongod -f /etc/mong
 admin      28817    1710  0 16:32 pts/0    00:00:00 grep --color=auto -i mongod
 [admin@mongodb mongodb8]$
 
+
+
+install mongosh client:
+
+[admin@mongodb mongodb8]$ cd ..
+[admin@mongodb software]$ ls
+mongodb7  mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+mongodb8  mongodb-mongosh-2.8.2.x86_64.rpm
+[admin@mongodb software]$ sudo rpm -ivh mongodb-mongosh-2.8.2.x86_64.rpm
+[sudo] password for admin:
+warning: mongodb-mongosh-2.8.2.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID d361cb16: NOKEY
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-mongosh-2.8.2-1.el8      ################################# [100%]
+[admin@mongodb software]$
+
