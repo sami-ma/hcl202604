@@ -36,3 +36,25 @@ Updating / installing...
 Created symlink /etc/systemd/system/multi-user.target.wants/mongod.service → /usr/lib/systemd/system/mongod.service.
 [admin@mongodb mongodb8]$
 
+[admin@mongodb mongodb8]$ sudo systemctl status mongod.service
+○ mongod.service - MongoDB Database Server
+     Loaded: loaded (/usr/lib/systemd/system/mongod.service; enabled; preset: d>
+     Active: inactive (dead)
+       Docs: https://docs.mongodb.org/manual
+[admin@mongodb mongodb8]$ sudo systemctl start mongod.service
+[admin@mongodb mongodb8]$ sudo systemctl status mongod.service
+● mongod.service - MongoDB Database Server
+     Loaded: loaded (/usr/lib/systemd/system/mongod.service; enabled; preset: d>
+     Active: active (running) since Mon 2026-04-27 16:28:48 IST; 55s ago
+       Docs: https://docs.mongodb.org/manual
+   Main PID: 28738 (mongod)
+     Memory: 115.7M (peak: 116.1M)
+        CPU: 2.375s
+     CGroup: /system.slice/mongod.service
+             └─28738 /usr/bin/mongod -f /etc/mongod.conf
+
+Apr 27 16:28:48 mongodb systemd[1]: Started MongoDB Database Server.
+Apr 27 16:28:49 mongodb mongod[28738]: {"t":{"$date":"2026-04-27T16:28:49.150+0>
+Apr 27 16:28:49 mongodb mongod[28738]: {"t":{"$date":"2026-04-27T16:28:49.226+0>
+[admin@mongodb mongodb8]$
+
