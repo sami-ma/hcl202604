@@ -1,1 +1,5 @@
+27/4
 
+[admin@mongodb ~]$ cat /etc/os-release
+[admin@mongodb ~]$ uname -a
+Linux mongodb 5.14.0-611.47.1.el9_7.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Apr 8 12:18:23 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
