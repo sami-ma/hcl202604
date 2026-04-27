@@ -1,0 +1,171 @@
+[{
+  "_id": 7369,
+  "ename": "SMITH",
+  "job": "CLERK",
+  "mgr": 7902,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "345859200000"
+    }
+  },
+  "sal": 800,
+  "deptno": 20
+},{
+  "_id": 7499,
+  "ename": "ALLEN",
+  "job": "SALESMAN",
+  "mgr": 7698,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "351475200000"
+    }
+  },
+  "sal": 1600,
+  "comm": 300,
+  "deptno": 30
+},{
+  "_id": 7521,
+  "ename": "WARD",
+  "job": "SALESMAN",
+  "mgr": 7698,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "351648000000"
+    }
+  },
+  "sal": 1250,
+  "comm": 500,
+  "deptno": 30
+},{
+  "_id": 7566,
+  "ename": "JONES",
+  "job": "MANAGER",
+  "mgr": 7839,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "355017600000"
+    }
+  },
+  "sal": 2975,
+  "deptno": 20
+},{
+  "_id": 7654,
+  "ename": "MARTIN",
+  "job": "SALESMAN",
+  "mgr": 7698,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "370483200000"
+    }
+  },
+  "sal": 1250,
+  "comm": 1400,
+  "deptno": 30
+},{
+  "_id": 7698,
+  "ename": "BLAKE",
+  "job": "MANAGER",
+  "mgr": 7839,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "357523200000"
+    }
+  },
+  "sal": 2850,
+  "deptno": 30
+},{
+  "_id": 7782,
+  "ename": "CLARK",
+  "job": "MANAGER",
+  "mgr": 7839,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "360892800000"
+    }
+  },
+  "sal": 2450,
+  "deptno": 10
+},{
+  "_id": 7788,
+  "ename": "SCOTT",
+  "job": "ANALYST",
+  "mgr": 7566,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "408240000000"
+    }
+  },
+  "sal": 3000,
+  "deptno": 20
+},{
+  "_id": 7839,
+  "ename": "KING",
+  "job": "PRESIDENT",
+  "hiredate": {
+    "$date": {
+      "$numberLong": "374803200000"
+    }
+  },
+  "sal": 5000,
+  "deptno": 10
+},{
+  "_id": 7844,
+  "ename": "TURNER",
+  "job": "SALESMAN",
+  "mgr": 7698,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "368755200000"
+    }
+  },
+  "sal": 1500,
+  "deptno": 30
+},{
+  "_id": 7876,
+  "ename": "ADAMS",
+  "job": "CLERK",
+  "mgr": 7788,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "411177600000"
+    }
+  },
+  "sal": 1100,
+  "deptno": 20
+},{
+  "_id": 7900,
+  "ename": "JAMES",
+  "job": "CLERK",
+  "mgr": 7698,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "376185600000"
+    }
+  },
+  "sal": 950,
+  "deptno": 30
+},{
+  "_id": 7902,
+  "ename": "FORD",
+  "job": "ANALYST",
+  "mgr": 7566,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "376185600000"
+    }
+  },
+  "sal": 3000,
+  "deptno": 20
+},{
+  "_id": 7934,
+  "ename": "MILLER",
+  "job": "CLERK",
+  "mgr": 7782,
+  "hiredate": {
+    "$date": {
+      "$numberLong": "380592000000"
+    }
+  },
+  "sal": 1300,
+  "deptno": 10
+}]
