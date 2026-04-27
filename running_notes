@@ -3,3 +3,24 @@
 [admin@mongodb ~]$ cat /etc/os-release
 [admin@mongodb ~]$ uname -a
 Linux mongodb 5.14.0-611.47.1.el9_7.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Apr 8 12:18:23 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+
+[admin@mongodb ~]$ ls -l
+total 0
+drwxr-xr-x. 4 admin admin 135 Apr 26 13:23 software
+[admin@mongodb ~]$ cd software/
+[admin@mongodb software]$ pwd
+/home/admin/software
+[admin@mongodb software]$ ls -l
+total 103388
+drwxr-xr-x. 2 admin admin      106 Apr 26 13:22 mongodb7
+drwxr-xr-x. 2 admin admin      104 Apr 26 13:23 mongodb8
+-rw-r--r--. 1 admin admin 34080615 Apr 24 19:11 mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+-rw-r--r--. 1 admin admin 71785656 Mar 26 21:28 mongodb-mongosh-2.8.2.x86_64.rpm
+[admin@mongodb software]$ cd mongodb8
+[admin@mongodb mongodb8]$ ls -l
+total 89400
+-rw-r--r--. 1 admin admin 40372788 Apr 16 20:23 mongodb-org-mongos-8.2.7-1.el9.x86_64.rpm
+-rw-r--r--. 1 admin admin 51168662 Apr 16 20:23 mongodb-org-server-8.2.7-1.el9.x86_64.rpm
+[admin@mongodb mongodb8]$
+
