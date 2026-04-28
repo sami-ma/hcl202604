@@ -541,6 +541,38 @@ hr> db.emp.find({ename: {$regex: /^[MS]/ } })
 hr>
 
 
+hcl> db.product.find({price:{$exists:1} })
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20,
+    price: 550
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 40, pname: 'Inter Core i7 CPU', price: 15400 },
+  {
+    _id: ObjectId('69f052d80d41d4871044ba8c'),
+    pname: 'HP Printer',
+    qty: 40,
+    price: 7500
+  }
+]
+hcl> db.product.find({price:{$exists:0} })
+[
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' },
+  { _id: ObjectId('69f050ac0d41d4871044ba8b') }
+]
+hcl>
+
+
+
 
 
 
