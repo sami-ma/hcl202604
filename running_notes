@@ -571,6 +571,14 @@ hcl> db.product.find({price:{$exists:0} })
 ]
 hcl>
 
+hcl> db.product.find({price:null })
+[
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' },
+  { _id: ObjectId('69f050ac0d41d4871044ba8b') }
+]
+hcl>
+
+
 
 
 
