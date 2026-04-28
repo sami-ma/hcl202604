@@ -449,7 +449,96 @@ hr> db.emp.find({hiredate:new Date('1982-01-23') })
 ]
 hr>
 
+hr> db.emp.find({ename: {$regex: /^M/ } })
+[
+  {
+    _id: 7654,
+    ename: 'MARTIN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-09-28T00:00:00.000Z'),
+    sal: 1250,
+    comm: 1400,
+    deptno: 30
+  },
+  {
+    _id: 7934,
+    ename: 'MILLER',
+    job: 'CLERK',
+    mgr: 7782,
+    hiredate: ISODate('1982-01-23T00:00:00.000Z'),
+    sal: 1300,
+    deptno: 10
+  }
+]
+hr> db.emp.find({ename: {$regex: /M$/ } })
 
+hr> db.emp.find({ename: {$regex: /N$/ } })
+[
+  {
+    _id: 7499,
+    ename: 'ALLEN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-02-20T00:00:00.000Z'),
+    sal: 1600,
+    comm: 300,
+    deptno: 30
+  },
+  {
+    _id: 7654,
+    ename: 'MARTIN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-09-28T00:00:00.000Z'),
+    sal: 1250,
+    comm: 1400,
+    deptno: 30
+  }
+]
+hr> db.emp.find({ename: {$regex: /^[MS]/ } })
+[
+  {
+    _id: 7369,
+    ename: 'SMITH',
+    job: 'CLERK',
+    mgr: 7902,
+    hiredate: ISODate('1980-12-17T00:00:00.000Z'),
+    sal: 800,
+    deptno: 20
+  },
+  {
+    _id: 7654,
+    ename: 'MARTIN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-09-28T00:00:00.000Z'),
+    sal: 1250,
+    comm: 1400,
+    deptno: 30
+  },
+  {
+    _id: 7788,
+    ename: 'SCOTT',
+    job: 'ANALYST',
+    mgr: 7566,
+    hiredate: ISODate('1982-12-09T00:00:00.000Z'),
+    sal: 3000,
+    deptno: 20
+  },
+  {
+    _id: 7934,
+    ename: 'MILLER',
+    job: 'CLERK',
+    mgr: 7782,
+    hiredate: ISODate('1982-01-23T00:00:00.000Z')
+
+,
+    sal: 1300,
+    deptno: 10
+  }
+]
+hr>
 
 
 
