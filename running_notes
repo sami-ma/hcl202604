@@ -319,6 +319,19 @@ hcl> db.product.find({}, {_id:0, pname:1, qty:1})
 ]
 hcl>
 
+hcl> db.product.find({supplier:"remigton"})
+[
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' }
+]
+hcl>
+
 
 
 
