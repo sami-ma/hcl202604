@@ -272,6 +272,22 @@ hcl> db.product.find().count()
 6
 hcl>
 
+hcl> db.product.find().count()
+6
+hcl> db.product.find({qty:30})
+[
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' }
+]
+hcl>
+
+
 
 
 
