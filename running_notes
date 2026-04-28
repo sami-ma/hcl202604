@@ -287,6 +287,39 @@ hcl> db.product.find({qty:30})
 ]
 hcl>
 
+hcl> db.product.find({}, {pname:1, qty:1})
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30 },
+  { _id: ObjectId('69f050ac0d41d4871044ba8b') },
+  { _id: 40, pname: 'Inter Core i7 CPU' },
+  {
+    _id: ObjectId('69f052d80d41d4871044ba8c'),
+    pname: 'HP Printer',
+    qty: 40
+  }
+]
+hcl> db.product.find({}, {_id:0, pname:1, qty:1})
+[
+  { pname: 'TVS Keyboard', qty: 20 },
+  { pname: 'Logitech Keyboard', qty: 30 },
+  { pname: 'Logitech Mouse', qty: 30 },
+  {},
+  { pname: 'Inter Core i7 CPU' },
+  { pname: 'HP Printer', qty: 40 }
+]
+hcl>
+
+
 
 
 
