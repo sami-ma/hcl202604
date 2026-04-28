@@ -157,6 +157,84 @@ hcl> show collections
 
 hcl>
 
+Inserting data:
+
+hcl> db.product.insertOne( {pname:"TVS Keyboard", qty:20, price:550} )
+{
+  acknowledged: true,
+  insertedId: ObjectId('69f04ee90d41d4871044ba89')
+}
+hcl> db.product.insertOne( {pname:"Logitech Keyboard", qty:30, price:550, supplier:"remigton"} )
+{
+  acknowledged: true,
+  insertedId: ObjectId('69f04f2a0d41d4871044ba8a')
+}
+hcl>
+
+hcl> show collections
+product
+hcl> db.product.find()
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20,
+    price: 550
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  }
+]
+hcl> db.product.insertOne( {_id:30, pname:"Logitech Mouse", qty:30,  supplier:"remigton"} )
+{ acknowledged: true, insertedId: 30 }
+hcl> db.product.find()
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20,
+    price: 550
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' }
+]
+hcl> db.product.insertOne( {} )
+{
+  acknowledged: true,
+  insertedId: ObjectId('69f050ac0d41d4871044ba8b')
+}
+hcl> db.product.find()
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20,
+    price: 550
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' },
+  { _id: ObjectId('69f050ac0d41d4871044ba8b') }
+]
+hcl>
+
+
+
 
 
 
