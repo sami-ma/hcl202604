@@ -578,6 +578,43 @@ hcl> db.product.find({price:null })
 ]
 hcl>
 
+hr> db.emp.find({}, {_id:0, ename:1, job:1, sal:1} ).sort({ename:1})
+[
+  { ename: 'ADAMS', job: 'CLERK', sal: 1100 },
+  { ename: 'ALLEN', job: 'SALESMAN', sal: 1600 },
+  { ename: 'BLAKE', job: 'MANAGER', sal: 2850 },
+  { ename: 'CLARK', job: 'MANAGER', sal: 2450 },
+  { ename: 'FORD', job: 'ANALYST', sal: 3000 },
+  { ename: 'JAMES', job: 'CLERK', sal: 950 },
+  { ename: 'JONES', job: 'MANAGER', sal: 2975 },
+  { ename: 'KING', job: 'PRESIDENT', sal: 5000 },
+  { ename: 'MARTIN', job: 'SALESMAN', sal: 1250 },
+  { ename: 'MILLER', job: 'CLERK', sal: 1300 },
+  { ename: 'SCOTT', job: 'ANALYST', sal: 3000 },
+  { ename: 'SMITH', job: 'CLERK', sal: 800 },
+  { ename: 'TURNER', job: 'SALESMAN', sal: 1500 },
+  { ename: 'WARD', job: 'SALESMAN', sal: 1250 }
+]
+
+hr> db.emp.find({}, {_id:0, ename:1, job:1, sal:1} ).sort({ename:-1})
+[
+  { ename: 'WARD', job: 'SALESMAN', sal: 1250 },
+  { ename: 'TURNER', job: 'SALESMAN', sal: 1500 },
+  { ename: 'SMITH', job: 'CLERK', sal: 800 },
+  { ename: 'SCOTT', job: 'ANALYST', sal: 3000 },
+  { ename: 'MILLER', job: 'CLERK', sal: 1300 },
+  { ename: 'MARTIN', job: 'SALESMAN', sal: 1250 },
+  { ename: 'KING', job: 'PRESIDENT', sal: 5000 },
+  { ename: 'JONES', job: 'MANAGER', sal: 2975 },
+  { ename: 'JAMES', job: 'CLERK', sal: 950 },
+  { ename: 'FORD', job: 'ANALYST', sal: 3000 },
+  { ename: 'CLARK', job: 'MANAGER', sal: 2450 },
+  { ename: 'BLAKE', job: 'MANAGER', sal: 2850 },
+  { ename: 'ALLEN', job: 'SALESMAN', sal: 1600 },
+  { ename: 'ADAMS', job: 'CLERK', sal: 1100 }
+]
+hr>
+
 
 
 
