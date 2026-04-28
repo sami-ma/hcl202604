@@ -110,4 +110,41 @@ admin      29189    1710  0 16:52 pts/0    00:00:00 grep --color=auto -i mongod
 [admin@mongodb software]$
 
 
+Day 2
+=====
+Using Mongo Shell and CRUD
+test> showdbs
+ReferenceError: showdbs is not defined
+test> show dbs
+admin   40.00 KiB
+config  36.00 KiB
+hr      80.00 KiB
+local   72.00 KiB
+test>
+
+test> use hr
+switched to db hr
+hr> show collections
+dept
+emp
+hr>
+
+hr> db.dept.find()
+[
+  { _id: 10, dname: 'ACCOUNTING', loc: 'NEW YORK' },
+  { _id: 20, dname: 'RESEARCH', loc: 'DALLAS' },
+  { _id: 30, dname: 'SALES', loc: 'CHICAGO' },
+  { _id: 40, dname: 'OPERATIONS', loc: 'BOSTON' }
+]
+hr>
+
+
+hr> db.emp.find()
+
+hr> db.emp.find().limit(3)
+
+hr> db.emp.find().limit(3).skip(3)
+
+
+
 
