@@ -615,6 +615,42 @@ hr> db.emp.find({}, {_id:0, ename:1, job:1, sal:1} ).sort({ename:-1})
 ]
 hr>
 
+hr> db.emp.updateOne({ename:"SMITH"}, {$set: {sal:900}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+hr> db.emp.find({ename:"SMITH"}, {_id:0, ename:1, job:1, sal:1} )
+[ { ename: 'SMITH', job: 'CLERK', sal: 900 } ]
+hr> db.emp.updateOne({ename:"SMITH"}, {$inc: {sal:50}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+hr> db.emp.find({ename:"SMITH"}, {_id:0, ename:1, job:1, sal:1} )
+[ { ename: 'SMITH', job: 'CLERK', sal: 950 } ]
+hr>
+
+
+hcl> db.product.updateOne({_id:40}, {$set: {qty:100}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+hcl> db.product.find({_id:40})
+[ { _id: 40, pname: 'Inter Core i7 CPU', price: 15400, qty: 100 } ]
+hcl>
+
+
 
 
 
