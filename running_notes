@@ -651,6 +651,37 @@ hcl> db.product.find({_id:40})
 hcl>
 
 
+Aggregations:
+
+hr> db.emp.aggregate( [ {$group: {_id:"$deptno",   per_dept_salary:{$sum:"$sal"}  }    } ] )
+[
+  { _id: 30, per_dept_salary: 9400 },
+  { _id: 20, per_dept_salary: 11025 },
+  { _id: 10, per_dept_salary: 8750 }
+]
+hr> db.emp.aggregate( [ {$group: {_id:"$deptno",   per_dept_emp_count:{$sum:1}  }    } ] )
+[
+  { _id: 10, per_dept_emp_count: 3 },
+  { _id: 20, per_dept_emp_count: 5 },
+  { _id: 30, per_dept_emp_count: 6 }
+]
+hr> db.emp.aggregate( [ {$group: {_id:"$deptno",   per_dept_max_salary:{$max:"$sal"}  }    } ] )
+[
+  { _id: 10, per_dept_max_salary: 5000 },
+  { _id: 20, per_dept_max_salary: 3000 },
+  { _id: 30, per_dept_max_salary: 2850 }
+]
+
+
+hr> db.emp.aggregate( [ {$group: {_id:"$deptno",   per_dept_max_salary:{$max:"$sal"}  }    }, {$match:{"per_dept_max_salary":{$gte:3000} } }] )
+[
+  { _id: 20, per_dept_max_salary: 3000 },
+  { _id: 10, per_dept_max_salary: 5000 }
+]
+hr>
+
+
+
 
 
 
