@@ -266,6 +266,13 @@ hcl> db.product.find()
 ]
 hcl>
 
+hcl> show collections
+product
+hcl> db.product.find().count()
+6
+hcl>
+
+
 
 
 
