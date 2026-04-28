@@ -145,6 +145,19 @@ hr> db.emp.find().limit(3)
 
 hr> db.emp.find().limit(3).skip(3)
 
+hr> use hcl
+switched to db hcl
+hcl> db.createCollection('sami')
+{ ok: 1 }
+hcl> show collections
+sami
+hcl> db.sami.drop()
+true
+hcl> show collections
+
+hcl>
+
+
 
 
 
