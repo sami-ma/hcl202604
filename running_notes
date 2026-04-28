@@ -333,6 +333,49 @@ hcl> db.product.find({supplier:"remigton"})
 hcl>
 
 
+hcl> db.product.find({supplier:"remigton"})
+[
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  },
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' }
+]
+hcl> db.product.find({_id:30})
+[ { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' } ]
+hcl> db.product.find({_id:{$in: [30,40]}  })
+[
+  { _id: 30, pname: 'Logitech Mouse', qty: 30, supplier: 'remigton' },
+  { _id: 40, pname: 'Inter Core i7 CPU', price: 15400 }
+]
+hcl> db.product.find({price:15499 })
+
+hcl> db.product.find({price:15400 })
+[ { _id: 40, pname: 'Inter Core i7 CPU', price: 15400 } ]
+hcl> db.product.find({price:{$lt:1000}})
+[
+  {
+    _id: ObjectId('69f04ee90d41d4871044ba89'),
+    pname: 'TVS Keyboard',
+    qty: 20,
+    price: 550
+  },
+  {
+    _id: ObjectId('69f04f2a0d41d4871044ba8a'),
+    pname: 'Logitech Keyboard',
+    qty: 30,
+    price: 550,
+    supplier: 'remigton'
+  }
+]
+hcl>
+
+
+
+
 
 
 
