@@ -374,6 +374,80 @@ hcl> db.product.find({price:{$lt:1000}})
 hcl>
 
 
+hr> db.emp.find({sal:{$gte:1000, $lte:2000} })
+[
+  {
+    _id: 7499,
+    ename: 'ALLEN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-02-20T00:00:00.000Z'),
+    sal: 1600,
+    comm: 300,
+    deptno: 30
+  },
+  {
+    _id: 7521,
+    ename: 'WARD',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-02-22T00:00:00.000Z'),
+    sal: 1250,
+    comm: 500,
+    deptno: 30
+  },
+  {
+    _id: 7654,
+    ename: 'MARTIN',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-09-28T00:00:00.000Z'),
+    sal: 1250,
+    comm: 1400,
+    deptno: 30
+  },
+  {
+    _id: 7844,
+    ename: 'TURNER',
+    job: 'SALESMAN',
+    mgr: 7698,
+    hiredate: ISODate('1981-09-08T00:00:00.000Z'),
+    sal: 1500,
+    deptno: 30
+  },
+  {
+    _id: 7876,
+    ename: 'ADAMS',
+    job: 'CLERK',
+    mgr: 7788,
+    hiredate: ISODate('1983-01-12T00:00:00.000Z'),
+    sal: 1100,
+    deptno: 20
+  },
+  {
+    _id: 7934,
+    ename: 'MILLER',
+    job: 'CLERK',
+    mgr: 7782,
+    hiredate: ISODate('1982-01-23T00:00:00.000Z'),
+    sal: 1300,
+    deptno: 10
+  }
+]
+
+hr> db.emp.find({hiredate:new Date('1982-01-23') })
+[
+  {
+    _id: 7934,
+    ename: 'MILLER',
+    job: 'CLERK',
+    mgr: 7782,
+    hiredate: ISODate('1982-01-23T00:00:00.000Z'),
+    sal: 1300,
+    deptno: 10
+  }
+]
+hr>
 
 
 
