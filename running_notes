@@ -973,8 +973,10 @@ admin> db["system.users"].find()
     roles: [ { role: 'root', db: 'admin' } ]
   }
 ]
-admin>
+admin> exit
 
+[admin@mongodb software]$ mongosh --authenticationDatabase admin -u admin -p
+Enter password: *********
 
 
 
