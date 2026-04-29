@@ -846,6 +846,64 @@ admin> db.runCommand(
 admin>
 
 
+admin> db.runCommand(
+| {
+| rolesInfo: { role: "userAdmin", db: "admin" },
+| showPrivileges: true
+| }
+| )
+{
+  roles: [
+    {
+      db: 'admin',
+      role: 'userAdmin',
+      roles: [],
+      privileges: [
+        {
+          resource: { db: 'admin', collection: '' },
+          actions: [
+            'changeCustomData',
+            'changePassword',
+            'createRole',
+            'createUser',
+            'dropRole',
+            'dropUser',
+            'grantRole',
+            'revokeRole',
+            'setAuthenticationRestriction',
+            'viewRole',
+            'viewUser'
+          ]
+        }
+      ],
+      inheritedRoles: [],
+      inheritedPrivileges: [
+        {
+          resource: { db: 'admin', collection: '' },
+          actions: [
+            'changeCustomData',
+            'changePassword',
+            'createRole',
+            'createUser',
+            'dropRole',
+            'dropUser',
+            'grantRole',
+            'revokeRole',
+            'setAuthenticationRestriction',
+            'viewRole',
+            'viewUser'
+          ]
+        }
+      ],
+      isBuiltin: true
+    }
+  ],
+  ok: 1
+}
+admin>
+
+
+
 
 
 
