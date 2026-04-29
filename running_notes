@@ -1261,6 +1261,138 @@ storage:
 Save and Restart mongodb service
 
 
+MongoDB Profiler:
+
+test> use hr
+switched to db hr
+hr> db.getProfilingStatus()
+{ was: 0, slowms: 100, sampleRate: 1, ok: 1 }
+hr> show collections
+dept
+emp
+hr> db.setProfilingLevel(2)
+{ was: 0, slowms: 100, sampleRate: 1, ok: 1 }
+hr> db.getProfilingStatus()
+{ was: 2, slowms: 100, sampleRate: 1, ok: 1 }
+hr>
+
+hr> show collections
+dept
+emp
+system.profile
+hr> db.emp.find({ename:"FORD"}).hint( { $natural : 1 })
+[
+  {
+    _id: 7902,
+    ename: 'FORD',
+    job: 'ANALYST',
+    mgr: 7566,
+    hiredate: ISODate('1981-12-03T00:00:00.000Z'),
+    sal: 3000,
+    deptno: 20
+  }
+]
+hr> db["system.profile"].find()
+[
+  {
+    op: 'query',
+    ns: 'hr.emp',
+    command: {
+      find: 'emp',
+      filter: { ename: 'FORD' },
+      hint: { '$natural': 1 },
+      lsid: { id: UUID('51da3029-aff5-41ce-81f9-8a8081445368') },
+      '$db': 'hr'
+    },
+    keysExamined: 0,
+    docsExamined: 14,
+    nBatches: 1,
+    cursorExhausted: true,
+    numYield: 0,
+    nreturned: 1,
+    planCacheShapeHash: 'A871A75B',
+    queryHash: 'A871A75B',
+    planCacheKey: '9DD89BBF',
+    queryShapeHash: 'C435130996FEEE19A5DD39D7DB997070CDB3F237BC65CDCE3B840B49FB08D5C1',
+    queryFramework: 'classic',
+    locks: { Global: { acquireCount: { r: Long('1') } } },
+    flowControl: {},
+    responseLength: 193,
+    protocol: 'op_msg',
+    cpuNanos: 2703386,
+    millis: 3,
+    planSummary: 'COLLSCAN',
+    planningTimeMicros: 977,
+    execStats: {
+      isCached: false,
+      stage: 'COLLSCAN',
+      filter: { ename: { '$eq': 'FORD' } },
+      nReturned: 1,
+      executionTimeMillisEstimate: 0,
+      works: 15,
+      advanced: 1,
+      needTime: 13,
+      needYield: 0,
+      saveState: 0,
+      restoreState: 0,
+      isEOF: 1,
+      direction: 'forward',
+      docsExamined: 14
+    },
+    ts: ISODate('2026-04-29T11:13:39.497Z'),
+    client: '127.0.0.1',
+    appName: 'mongosh 2.8.2',
+    allUsers: [ { user: 'admin', db: 'admin' } ],
+    user: 'admin@admin'
+  },
+  {
+    op: 'command',
+    ns: 'hr.test',
+    command: {
+      aggregate: 'test',
+      pipeline: [ { '$sample': { size: 10 } } ],
+      allowDiskUse: true,
+      cursor: {},
+      maxTimeMS: 1000,
+      lsid: { id: UUID('51da3029-aff5-41ce-81f9-8a8081445368') },
+      '$db': 'hr'
+    },
+    keysExamined: 0,
+    docsExamined: 0,
+    cursorExhausted: true,
+    numYield: 0,
+    nreturned: 0,
+    queryShapeHash: '4F0BA83A0F4632956DDA127B7DB97582FA7C9B80A422BC6DB0DFA0CD473F73D8',
+    queryFramework: 'classic',
+    locks: { Global: { acquireCount: { r: Long('1') } } },
+    flowControl: {},
+    responseLength: 96,
+    protocol: 'op_msg',
+    cpuNanos: 1278169,
+    millis: 1,
+    planSummary: 'EOF',
+    planningTimeMicros: 131,
+    ts: ISODate('2026-04-29T11:13:51.093Z'),
+    client: '127.0.0.1',
+    appName: 'mongosh 2.8.2',
+    allUsers: [ { user: 'admin', db: 'admin' } ],
+    user: 'admin@admin'
+  }
+]
+hr>
+
+
+hr> db.setProfilingLevel(0)
+{ was: 2, slowms: 100, sampleRate: 1, ok: 1 }
+hr> db.getProfilingStatus()
+{ was: 0, slowms: 100, sampleRate: 1, ok: 1 }
+hr> show collections
+dept
+emp
+system.profile
+hr>
+
+
 
 
 
