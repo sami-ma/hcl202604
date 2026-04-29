@@ -902,6 +902,81 @@ admin> db.runCommand(
 }
 admin>
 
+Enable authorization by editing mongod.conf file
+
+[admin@mongodb software]$ sudo nano /etc/mongod.conf
+[sudo] password for admin:
+
+add following in the file:
+
+security:
+  authorization: enabled
+
+save & exit nano
+
+Restart MongoDB
+
+[admin@mongodb software]$ sudo systemctl stop mongod.service
+[admin@mongodb software]$ sudo systemctl start mongod.service
+[admin@mongodb software]$
+
+
+
+Login to monf=godb and create super user:
+
+[admin@mongodb software]$ sudo systemctl stop mongod.service
+[admin@mongodb software]$ sudo systemctl start mongod.service
+[admin@mongodb software]$ mongosh
+
+test> use admin
+switched to db admin
+admin> db.createUser({
+| user: "admin",
+| pwd: "pass12345",
+| roles: [ {role: "root", db: "admin"} ]
+| })
+{ ok: 1 }
+admin> db.auth("admin", "pass12345")
+{ ok: 1 }
+admin> show dbs
+admin   100.00 KiB
+config   36.00 KiB
+hcl      68.00 KiB
+hr       92.00 KiB
+local    76.00 KiB
+admin>
+
+admin> show collections
+system.users
+system.version
+admin> db["system.users"].find()
+[
+  {
+    _id: 'admin.admin',
+    userId: UUID('67e7162b-deae-4961-bc64-fb676982823e'),
+    user: 'admin',
+    db: 'admin',
+    credentials: {
+      'SCRAM-SHA-1': {
+        iterationCount: 10000,
+        salt: 'mB4is2cdKagMVssP9coguQ==',
+        storedKey: 'd4ASeZlx+eKBMAePMp8js9ubv3A=',
+        serverKey: 'mK71Wv4cDT2D59kep3zwIPhcA24='
+      },
+      'SCRAM-SHA-256': {
+        iterationCount: 15000,
+        salt: '8aBQ54KzekP4Jvuwo++MNx6mdLxpKrBLue+4wA==',
+        storedKey: 'Dqu8EjTQTqghAsbsLx0CuL+epy6oKiQ1Bl+ogM0rZMI=',
+        serverKey: 'vdYF5VmVYkfVZ1NGrJOQo4A+DmAw35Hdrnw9YwaE8D8='
+      }
+    },
+    roles: [ { role: 'root', db: 'admin' } ]
+  }
+]
+admin>
+
+
+
 
 
 
