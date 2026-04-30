@@ -1534,6 +1534,21 @@ Replication Setup on 3 nodes:
 
 
 Use ReplicaSet Name as hcl
+
+Make sure all 3 nodes ping to each other using hostname by addng entries in /etc/hosts file
+
+[admin@shard2 etc]$ sudo nono /etc/hosts
+[sudo] password for admin:
+[admin@shard2 etc]$ cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.94.130  shard1
+192.168.94.132  shard2
+192.168.94.129  mongodb
+[admin@shard2 etc]$
+
+add above entries in all 3 nodes and ping by hostname.
+
 Create a Certificate 
 
 [admin@mongodb ~]$ cd
