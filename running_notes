@@ -1508,6 +1508,22 @@ Restore a single collection from backup in a different (new) database
 2026-04-30T11:38:32.507+0530    6 document(s) restored successfully. 0 document(s) failed to restore.
 [admin@mongodb ~]$
 
+BSONdUMP:
+
+[admin@mongodb hr]$ pwd
+/home/admin/mybkp/hr
+[admin@mongodb hr]$
+
+
+[admin@mongodb hr]$ ls
+dept.bson  dept.metadata.json  emp.bson  emp.metadata.json  prelude.json
+[admin@mongodb hr]$ bsondump dept.bson
+{"_id":{"$numberInt":"10"},"dname":"ACCOUNTING","loc":"NEW YORK"}
+{"_id":{"$numberInt":"20"},"dname":"RESEARCH","loc":"DALLAS"}
+{"_id":{"$numberInt":"30"},"dname":"SALES","loc":"CHICAGO"}
+{"_id":{"$numberInt":"40"},"dname":"OPERATIONS","loc":"BOSTON"}
+2026-04-30T12:11:20.163+0530    4 objects found
+
 
 
 
