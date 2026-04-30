@@ -1392,6 +1392,35 @@ emp
 system.profile
 hr>
 
+Day 4
+=====
+
+30/04
+
+BAckup Recovery
+
+Download Database Tools to get backup & Restore commands
+
+[admin@mongodb ~]$ wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+
+Install Database Tools:
+
+[admin@mongodb ~]$ ls
+mongodb-database-tools-rhel93-x86_64-100.16.1.rpm  software
+[admin@mongodb ~]$ sudo rpm -ivh mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+[sudo] password for admin:
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-database-tools-100.16.1-1################################# [100%]
+[admin@mongodb ~]$
+
+[admin@mongodb ~]$ ls /usr/bin/mongo*
+/usr/bin/mongod       /usr/bin/mongofiles    /usr/bin/mongosh
+/usr/bin/mongodump    /usr/bin/mongoimport   /usr/bin/mongostat
+/usr/bin/mongoexport  /usr/bin/mongorestore  /usr/bin/mongotop
+[admin@mongodb ~]$
+
 
 
 
