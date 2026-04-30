@@ -1530,6 +1530,102 @@ Export:
 [admin@mongodb hr]$ mongoexport  -h 127.0.0.1 -u admin -p pass12345 --authenticationDatabase admin -d hr -c emp  -o  /home/admin/emp.json
 
 
+Replication Setup on 3 nodes:
+
+
+Use ReplicaSet Name as hcl
+Create a Certificate 
+
+[admin@mongodb ~]$ cd
+[admin@mongodb ~]$ pwd
+/home/admin
+[admin@mongodb ~]$ openssl rand -base64 741 > hclkey
+[admin@mongodb ~]$ ls
+hclkey  software
+[admin@mongodb ~]$ sudo cp hclkey /etc/mongodb/pki/
+[admin@mongodb ~]$ ls /etc/mongodb/pki/
+hclkey
+[admin@mongodb ~]$ ls -l /etc/mongodb/pki/
+total 4
+-rw-r--r--. 1 root root 1004 Apr 30 15:14 hclkey
+[admin@mongodb ~]$ chown -R mongod:mongod  /etc/mongodb/
+chown: changing ownership of '/etc/mongodb/pki/hclkey': Operation not permitted
+chown: changing ownership of '/etc/mongodb/pki': Operation not permitted
+chown: changing ownership of '/etc/mongodb/': Operation not permitted
+[admin@mongodb ~]$ sudo chown -R mongod:mongod  /etc/mongodb/
+[admin@mongodb ~]$ ls -l /etc/mongodb/pki/
+total 4
+-rw-r--r--. 1 mongod mongod 1004 Apr 30 15:14 hclkey
+[admin@mongodb ~]$ sudo chmod 400 /etc/mongodb/pki/hclkey
+[admin@mongodb ~]$ ls -l /etc/mongodb/pki/
+total 4
+-r--------. 1 mongod mongod 1004 Apr 30 15:14 hclkey
+[admin@mongodb ~]$
+
+
+Copy the certificate file to other 2 nodes:
+
+[admin@mongodb ~]$ scp hclkey  admin@192.168.94.130:~/
+The authenticity of host '192.168.94.130 (192.168.94.130)' can't be established.
+ED25519 key fingerprint is SHA256:KDIN4FfVDvqu+r5kOUesAwazHBHal+uhUsJrOeYdC3U.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.94.130' (ED25519) to the list of known hosts.
+admin@192.168.94.130's password:
+hclkey                                        100% 1004   585.1KB/s   00:00
+
+[admin@mongodb ~]$ scp hclkey  admin@192.168.94.132:~/
+The authenticity of host '192.168.94.132 (192.168.94.132)' can't be established.
+ED25519 key fingerprint is SHA256:KDIN4FfVDvqu+r5kOUesAwazHBHal+uhUsJrOeYdC3U.
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:1: 192.168.94.130
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.94.132' (ED25519) to the list of known hosts.
+admin@192.168.94.132's password:
+hclkey                                        100% 1004   313.0KB/s   00:00
+[admin@mongodb ~]$
+
+
+On Shard1 (seconf node)  copy the key file to secure /etc/mongodb/pki directory and set the permission:
+
+[admin@shard1 mongodb8]$ sudo mkdir -p /etc/mongodb/pki
+[sudo] password for admin:
+[admin@shard1 mongodb8]$ cd
+[admin@shard1 ~]$ pwd
+/home/admin
+[admin@shard1 ~]$ ls
+hclkey  software
+[admin@shard1 ~]$ sudo cp hclkey /etc/mongodb/pki/
+[admin@shard1 ~]$ ls -l /etc/mongodb/pki/
+total 4
+-rw-r--r--. 1 root root 1004 Apr 30 15:21 hclkey
+[admin@shard1 ~]$ sudo chown -R mongod:mongod /etc/mongodb
+[admin@shard1 ~]$ sudo chmod 400 /etc/mongodb/pki/hclkey
+[admin@shard1 ~]$ ls -l /etc/mongodb/pki/
+total 4
+-r--------. 1 mongod mongod 1004 Apr 30 15:21 hclkey
+[admin@shard1 ~]$
+
+On Shard2 (third node)  copy the key file to secure /etc/mongodb/pki directory and set the permission:
+
+
+[admin@shard2 software]$ cd
+[admin@shard2 ~]$ ls
+hclkey  software
+[admin@shard2 ~]$ sudo mkdir -p /etc/mongodb/pki
+[sudo] password for admin:
+[admin@shard2 ~]$ sudo cp hclkey /etc/mongodb/pki/
+[admin@shard2 ~]$ ls -l /etc/mongodb/pki/
+total 4
+-rw-r--r--. 1 root root 1004 Apr 30 15:25 hclkey
+[admin@shard2 ~]$ sudo chown -R mongod:mongod /etc/mongodb
+[admin@shard2 ~]$ sudo chmod 400 /etc/mongodb/pki/hclkey
+[admin@shard2 ~]$ ls -l /etc/mongodb/pki/
+total 4
+-r--------. 1 mongod mongod 1004 Apr 30 15:25 hclkey
+[admin@shard2 ~]$
+
+
 
 
 
