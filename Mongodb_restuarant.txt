@@ -300,3 +300,17 @@ $or : [
                          "cuisine" :1
                         }
                    );
+
+
+
+Day 4
+=====
+
+30/04
+
+BAckup Recovery
+
+Download Database Tools to get backup & Restore commands
+
+[admin@mongodb ~]$ wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+
