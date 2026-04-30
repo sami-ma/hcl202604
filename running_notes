@@ -1626,8 +1626,114 @@ total 4
 [admin@shard2 ~]$
 
 
+Now edit the /etc/mongod.conf for replication settings on first node:
+
+[admin@mongodb ~]$ sudo nano /etc/mongod.conf
+[sudo] password for admin:
+[admin@mongodb ~]$ cat /etc/mongod.conf
+# mongod.conf
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+
+# how the process runs
+processManagement:
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+
+security:
+  authorization: enabled
+  keyFile: /etc/mongodb/pki/hclkey
 
 
+replication:
+  replSetName: hcl
+
+
+Make same changes in /etc/mongod.conf file on other 2 nodes also:
+
+Start Service on all 3 nodes:
+
+[admin@mongodb ~]$ sudo systemctl start mongod.service
+[sudo] password for admin:
+[admin@mongodb ~]$
+
+repeat on other 2 nodes:
+
+Login to mongdb using mongosh on first node:
+
+[admin@mongodb ~]$ mongosh
+
+initiate the replication:
+
+test> use admin
+
+admin> rs.initiate()
+{
+  info2: 'no configuration specified. Using a default configuration for the set',
+  me: 'mongodb:27017',
+  ok: 1
+}
+hcl [direct: secondary] admin>
+
+hcl [direct: primary] admin> db.createUser({
+| user: "admin",
+| pwd: "pass12345",
+| roles: [ {role: "root", db: "admin"} ]
+| })
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777544130, i: 3 }),
+    signature: {
+      hash: Binary.createFromBase64('lU/PCudXa2ezxQnZz3mk+tv63IA=', 0),
+      keyId: Long('7634493772402786309')
+    }
+  },
+  operationTime: Timestamp({ t: 1777544130, i: 3 })
+}
+
+hcl [direct: primary] admin> db.auth("admin","pass12345")
+{ ok: 1 }
+hcl [direct: primary] admin>
+
+Now Add the other 2 nodes to cluster from thsi first node:
+
+hcl [direct: primary] admin> rs.add("192.168.94.130:27017")
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777544389, i: 2 }),
+    signature: {
+      hash: Binary.createFromBase64('fvBxNottgIFzADfmTvVlYM2Nnv0=', 0),
+      keyId: Long('7634493772402786309')
+    }
+  },
+  operationTime: Timestamp({ t: 1777544389, i: 2 })
+}
+hcl [direct: primary] admin> rs.add("192.168.94.132:27017")
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777544412, i: 1 }),
+    signature: {
+      hash: Binary.createFromBase64('QY7libREQm76a/ibVZr/5YM91c8=', 0),
+      keyId: Long('7634493772402786309')
+    }
+  },
+  operationTime: Timestamp({ t: 1777544412, i: 1 })
+}
+hcl [direct: primary] admin>
 
 
 
