@@ -1750,6 +1750,6 @@ hcl [direct: primary] admin> rs.add("192.168.94.132:27017")
 }
 hcl [direct: primary] admin>
 
-
+hcl [direct: primary] admin>rs.status()
 
 
