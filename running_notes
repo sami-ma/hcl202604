@@ -1449,6 +1449,64 @@ PErform Full BAckup:
 [admin@mongodb ~]$
 
 
+Restoring a Single Collection:
+
+First Drop emp collection from Compass or mongosh
+
+[admin@mongodb ~]$ mongorestore  -u admin -p pass12345 --authenticationDatabase admin  --db=hr --collection=emp  fullbkp/hr/emp.bson
+
+
+Restore a database:
+
+first drop a database from compass or mongosh
+
+[admin@mongodb ~]$ mongorestore  -u admin -p pass12345 --authenticationDatabase admin  --db=hcl   fullbkp/hcl
+2026-04-30T11:32:02.359+0530    The --db and --collection flags are deprecated for this use-case; please use --nsInclude instead, i.e. with --nsInclude=${DATABASE}.${COLLECTION}
+2026-04-30T11:32:02.360+0530    building a list of collections to restore from `fullbkp/hcl` dir
+2026-04-30T11:32:02.361+0530    reading metadata for `hcl.product` from `fullbkp/hcl/product.metadata.json`
+2026-04-30T11:32:02.362+0530    reading metadata for `hcl.restaurants` from `fullbkp/hcl/restaurants.metadata.json`
+2026-04-30T11:32:02.391+0530    restoring `hcl.restaurants` from `fullbkp/hcl/restaurants.bson`
+2026-04-30T11:32:02.406+0530    restoring `hcl.product` from `fullbkp/hcl/product.bson`
+2026-04-30T11:32:02.423+0530    finished restoring `hcl.product` (6 documents, 0 failures)
+2026-04-30T11:32:02.653+0530    finished restoring `hcl.restaurants` (3772 documents, 0 failures)
+2026-04-30T11:32:02.653+0530    restoring indexes for collection `hcl.product` from metadata
+2026-04-30T11:32:02.653+0530    index: &idx.IndexDocument{Options:bson.M{"name":"price_-1", "v":2}, Key:bson.D{bson.E{Key:"price", Value:-1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-04-30T11:32:02.654+0530    restoring indexes for collection `hcl.restaurants` from metadata
+2026-04-30T11:32:02.654+0530    index: &idx.IndexDocument{Options:bson.M{"name":"borough_1", "v":2}, Key:bson.D{bson.E{Key:"borough", Value:1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-04-30T11:32:02.681+0530    3778 document(s) restored successfully. 0 document(s) failed to restore.
+[admin@mongodb ~]$
+
+
+Resore hcl database as a seperate database:
+
+[admin@mongodb ~]$ mongorestore  -u admin -p pass12345 --authenticationDatabase admin  --db=hcl_bkp   fullbkp/hcl
+2026-04-30T11:34:54.264+0530    The --db and --collection flags are deprecated for this use-case; please use --nsInclude instead, i.e. with --nsInclude=${DATABASE}.${COLLECTION}
+2026-04-30T11:34:54.265+0530    building a list of collections to restore from `fullbkp/hcl` dir
+2026-04-30T11:34:54.265+0530    reading metadata for `hcl_bkp.product` from `fullbkp/hcl/product.metadata.json`
+2026-04-30T11:34:54.265+0530    reading metadata for `hcl_bkp.restaurants` from `fullbkp/hcl/restaurants.metadata.json`
+2026-04-30T11:34:54.275+0530    restoring `hcl_bkp.restaurants` from `fullbkp/hcl/restaurants.bson`
+2026-04-30T11:34:54.295+0530    restoring `hcl_bkp.product` from `fullbkp/hcl/product.bson`
+2026-04-30T11:34:54.308+0530    finished restoring `hcl_bkp.product` (6 documents, 0 failures)
+2026-04-30T11:34:54.474+0530    finished restoring `hcl_bkp.restaurants` (3772 documents, 0 failures)
+2026-04-30T11:34:54.474+0530    restoring indexes for collection `hcl_bkp.product` from metadata
+2026-04-30T11:34:54.474+0530    index: &idx.IndexDocument{Options:bson.M{"name":"price_-1", "v":2}, Key:bson.D{bson.E{Key:"price", Value:-1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-04-30T11:34:54.477+0530    restoring indexes for collection `hcl_bkp.restaurants` from metadata
+2026-04-30T11:34:54.477+0530    index: &idx.IndexDocument{Options:bson.M{"name":"borough_1", "v":2}, Key:bson.D{bson.E{Key:"borough", Value:1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-04-30T11:34:54.509+0530    3778 document(s) restored successfully. 0 document(s) failed to restore.
+[admin@mongodb ~]$
+
+
+Restore a single collection from backup in a different (new) database 
+
+[admin@mongodb ~]$ mongorestore  -u admin -p pass12345 --authenticationDatabase admin  --db=mydb --collection=pr   fullbkp/hcl/product.bson
+2026-04-30T11:38:32.131+0530    checking for collection data in `fullbkp/hcl/product.bson`
+2026-04-30T11:38:32.131+0530    reading metadata for `mydb.pr` from `fullbkp/hcl/product.metadata.json`
+2026-04-30T11:38:32.152+0530    restoring `mydb.pr` from `fullbkp/hcl/product.bson`
+2026-04-30T11:38:32.196+0530    finished restoring `mydb.pr` (6 documents, 0 failures)
+2026-04-30T11:38:32.196+0530    restoring indexes for collection `mydb.pr` from metadata
+2026-04-30T11:38:32.197+0530    index: &idx.IndexDocument{Options:bson.M{"name":"price_-1", "v":2}, Key:bson.D{bson.E{Key:"price", Value:-1}}, PartialFilterExpression:(*bson.D)(nil)}
+2026-04-30T11:38:32.507+0530    6 document(s) restored successfully. 0 document(s) failed to restore.
+[admin@mongodb ~]$
 
 
 
