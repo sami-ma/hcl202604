@@ -1525,6 +1525,10 @@ dept.bson  dept.metadata.json  emp.bson  emp.metadata.json  prelude.json
 2026-04-30T12:11:20.163+0530    4 objects found
 
 
+Export:
+
+[admin@mongodb hr]$ mongoexport  -h 127.0.0.1 -u admin -p pass12345 --authenticationDatabase admin -d hr -c emp  -o  /home/admin/emp.json
+
 
 
 
