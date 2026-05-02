@@ -1883,5 +1883,21 @@ hcl [primary] test> rs.reconfig(myvar)
 }
 hcl [primary] test>
 
+REplicaton Lag:
+
+hcl [primary] test> rs.printSecondaryReplicationInfo()
+source: 192.168.94.130:27017
+{
+  syncedTo: 'Sat May 02 2026 11:05:56 GMT+0530 (India Standard Time)',
+  replLag: '0 secs (0 hrs) behind the primary '
+}
+---
+source: 192.168.94.132:27017
+{
+  syncedTo: 'Sat May 02 2026 11:05:56 GMT+0530 (India Standard Time)',
+  replLag: '0 secs (0 hrs) behind the primary '
+}
+hcl [primary] test>
+
 
 
