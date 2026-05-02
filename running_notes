@@ -2023,6 +2023,131 @@ sharding:
 [admin@configsrv software]$
 
 
+Start Mongodb service:
+
+[admin@configsrv software]$ sudo systemctl start mongod.service
+[sudo] password for admin:
+
+Connect to mongodb
+
+[admin@configsrv software]$ mongosh
+Current Mongosh Log ID: 69f5b867e62b59514744ba88
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2
+Using MongoDB:          8.2.7
+Using Mongosh:          2.8.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+test> rs.initiate()
+{
+  info2: 'no configuration specified. Using a default configuration for the set',
+  me: 'configsrv:27017',
+  ok: 1
+}
+configrep [direct: secondary] test> use admin
+switched to db admin
+
+configrep [direct: primary] admin> db.createUser({
+| user: "admin",
+| pwd: "pass12345",
+| roles: [ {role: "root", db: "admin"} ]
+| })
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777711318, i: 4 }),
+    signature: {
+      hash: Binary.createFromBase64('jV6qWLEHPpL7SA9KQLTCWTSiXfE=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777711318, i: 4 })
+}
+
+configrep [direct: primary] admin> db.auth("admin","pass12345")
+{ ok: 1 }
+
+configrep [direct: primary] admin> rs.status()
+{
+  set: 'configrep',
+  date: ISODate('2026-05-02T08:42:30.198Z'),
+  myState: 1,
+  term: Long('1'),
+  syncSourceHost: '',
+  syncSourceId: -1,
+  configsvr: true,
+  heartbeatIntervalMillis: Long('2000'),
+  majorityVoteCount: 1,
+  writeMajorityCount: 1,
+  votingMembersCount: 1,
+  writableVotingMembersCount: 1,
+  optimes: {
+    lastCommittedOpTime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+    lastCommittedWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+    readConcernMajorityOpTime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+    appliedOpTime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+    durableOpTime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+    writtenOpTime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+    lastAppliedWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+    lastDurableWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+    lastWrittenWallTime: ISODate('2026-05-02T08:42:30.088Z')
+  },
+  lastStableRecoveryTimestamp: Timestamp({ t: 1777711345, i: 1 }),
+  electionCandidateMetrics: {
+    lastElectionReason: 'electionTimeout',
+    lastElectionDate: ISODate('2026-05-02T08:40:26.034Z'),
+    electionTerm: Long('1'),
+    lastCommittedOpTimeAtElection: { ts: Timestamp({ t: 1777711225, i: 1 }), t: Long('-1') },
+    lastSeenWrittenOpTimeAtElection: { ts: Timestamp({ t: 1777711225, i: 1 }), t: Long('-1') },
+    lastSeenOpTimeAtElection: { ts: Timestamp({ t: 1777711225, i: 1 }), t: Long('-1') },
+    numVotesNeeded: 1,
+    priorityAtElection: 1,
+    electionTimeoutMillis: Long('10000'),
+    newTermStartDate: ISODate('2026-05-02T08:40:26.221Z'),
+    wMajorityWriteAvailabilityDate: ISODate('2026-05-02T08:40:26.426Z')
+  },
+  members: [
+    {
+      _id: 0,
+      name: 'configsrv:27017',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      uptime: 154,
+      optime: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+      optimeDate: ISODate('2026-05-02T08:42:30.000Z'),
+      optimeWritten: { ts: Timestamp({ t: 1777711350, i: 1 }), t: Long('1') },
+      optimeWrittenDate: ISODate('2026-05-02T08:42:30.000Z'),
+      lastAppliedWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+      lastDurableWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+      lastWrittenWallTime: ISODate('2026-05-02T08:42:30.088Z'),
+      syncSourceHost: '',
+      syncSourceId: -1,
+      infoMessage: '',
+      electionTime: Timestamp({ t: 1777711226, i: 1 }),
+      electionDate: ISODate('2026-05-02T08:40:26.000Z'),
+      configVersion: 1,
+      configTerm: 1,
+      self: true,
+      lastHeartbeatMessage: ''
+    }
+  ],
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777711350, i: 1 }),
+    signature: {
+      hash: Binary.createFromBase64('9m7wpSWhlyPOKephlrfYYqSbEJE=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777711350, i: 1 })
+}
+configrep [direct: primary] admin>
+
 
 
 
