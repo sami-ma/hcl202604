@@ -2422,6 +2422,41 @@ MongoServerError[IllegalOperation]: A shard named sh1 containing the replica set
 }
 [direct: mongos] test>
 
+Now  create a database and enable sharding on that database. Create a collection and shard the collection
+
+[direct: mongos] test> use restaurant
+switched to db restaurant
+[direct: mongos] restaurant> db.createCollection("restuarants");
+{ ok: 1 }
+[direct: mongos] restaurant> sh.enableSharding("restaurant")
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777716025, i: 1 }),
+    signature: {
+      hash: Binary.createFromBase64('zMMSxSX9jtod2kD6aRSIZBWtpoQ=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777716025, i: 1 })
+}
+[direct: mongos] restaurant> db.adminCommand( { shardCollection: "restaurant.restuarants", key: { _id: 1 } } )
+{
+  collectionsharded: 'restaurant.restuarants',
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777716148, i: 40 }),
+    signature: {
+      hash: Binary.createFromBase64('fubQkTMrgNp9qFpj2hlSqkJGonE=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777716148, i: 39 })
+}
+[direct: mongos] restaurant> sh.status()
+
+
+Load restaurants data in the restuarants collection from compass
 
 
 
