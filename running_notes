@@ -2148,7 +2148,279 @@ configrep [direct: primary] admin> rs.status()
 }
 configrep [direct: primary] admin>
 
+this completes config server:
 
+Setup mongos.
+-------------
+
+Clean up existing setup:
+
+[admin@mongodb ~]$ sudo systemctl stop mongod.service
+[sudo] password for admin:
+
+[admin@mongodb ~]$
+[admin@mongodb ~]$ sudo rm -rf  /var/lib/mongo/*
+[admin@mongodb ~]$
+
+Install and setup mongos:
+
+[admin@mongodb ~]$ cd software/
+[admin@mongodb software]$ cd mongodb8/
+[admin@mongodb mongodb8]$ ls
+mongodb-org-mongos-8.2.7-1.el9.x86_64.rpm  mongodb-org-server-8.2.7-1.el9.x86_64.rpm
+[admin@mongodb mongodb8]$ sudo rpm -ivh mongodb-org-mongos-8.2.7-1.el9.x86_64.rpm
+warning: mongodb-org-mongos-8.2.7-1.el9.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID 4e7dca05: NOKEY
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-org-mongos-8.2.7-1.el9   ################################# [100%]
+
+create log directory:
+
+[admin@mongodb etc]$ sudo mkdir -p /var/log/mongos
+[admin@mongodb etc]$ sudo chown admin:admin /var/log/mongos/
+[admin@mongodb etc]$
+
+[admin@mongodb mongodb8]$ cd /etc/
+[admin@mongodb etc]$ ls mong*
+mongod.conf
+
+[admin@mongodb etc]$ sudo vi /etc/mongos.conf
+[admin@mongodb etc]$ cat /etc/mongos.conf
+sharding:
+  configDB: configrep/192.168.94.131:27017
+security:
+  keyFile: /etc/mongodb/pki/hclkey
+net:
+  bindIp: 0.0.0.0
+  port: 26000
+systemLog:
+  destination: file
+  path: /var/log/mongos/mongos.log
+  logAppend: true
+#processManagement:
+#  fork: true
+[admin@mongodb etc]$
+
+set ownership and permission on keyFile:
+
+[admin@mongodb etc]$ sudo chown -R admin:admin /etc/mongodb
+[sudo] password for admin:
+[admin@mongodb etc]$
+
+start mongos:
+------------
+
+[admin@mongodb etc]$ mongos -f /etc/mongos.conf
+{"t":{"$date":"2026-05-02T14:32:33.880+05:30"},"s":"I",  "c":"-",        "id":8991200, "ctx":"main","msg":"Shuffling initializers","attr":{"seed":682609808}}
+{"t":{"$date":"2026-05-02T14:32:33.899+05:30"},"s":"W",  "c":"SHARDING", "id":24132,   "ctx":"main","msg":"Running a sharded cluster with fewer than 3 config servers should only be done for testing purposes and is not recommended for production."}
+[admin@mongodb etc]$
+
+Setup Shard1:
+
+Undo current replica node setting:
+
+[admin@shard1 ~]$ sudo systemctl stop mongod.service
+[sudo] password for admin:
+[admin@shard1 ~]$ sudo rm -rf /var/lib/mongo/*
+
+Set the configuration for shard1  (replSetName = sh1):
+
+[admin@shard1 ~]$ sudo nano /etc/mongod.conf
+[admin@shard1 ~]$ cat /etc/mongod.conf
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+
+# how the process runs
+processManagement:
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+
+
+security:
+  authorization: enabled
+  keyFile: /etc/mongodb/pki/hclkey
+#operationProfiling:
+
+replication:
+  replSetName: sh1
+sharding:
+  clusterRole: shardsvr
+## Enterprise-Only Options
+
+#auditLog:
+
+
+Start the service and initiate Replication:
+
+[admin@shard1 ~]$ sudo systemctl start mongod.service
+
+
+[admin@shard1 ~]$ mongosh
+Current Mongosh Log ID: 69f5bf3c7d6243f06e44ba88
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2
+Using MongoDB:          8.2.7
+Using Mongosh:          2.8.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+test> rs.initiate()
+{
+  info2: 'no configuration specified. Using a default configuration for the set',
+  me: 'shard1:27017',
+  ok: 1
+}
+sh1 [direct: secondary] test> use admin
+switched to db admin
+sh1 [direct: primary] admin> db.createUser({
+| user: "admin",
+| pwd: "pass12345",
+| roles: [ {role: "root", db: "admin"} ]
+| })
+{ ok: 1 }
+sh1 [direct: primary] admin> db.auth("admin","pass12345")
+{ ok: 1 }
+sh1 [direct: primary] admin>
+
+
+
+Now setup second shard:
+
+Clean upthe existing replicaSet setup:
+
+[admin@shard2 ~]$ sudo systemctl stop mongod.service
+[sudo] password for admin:
+[admin@shard2 ~]$ sudo rm -rf /var/lib/mongo/*
+
+Create config file:
+
+[admin@shard2 ~]$ sudo nano /etc/mongod.conf
+[admin@shard2 ~]$ cat /etc/mongod.conf
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+
+# how the process runs
+processManagement:
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+
+
+security:
+  authorization: enabled
+  keyFile: /etc/mongodb/pki/hclkey
+#operationProfiling:
+
+replication:
+  replSetName: sh2
+sharding:
+  clusterRole: shardsvr
+
+## Enterprise-Only Options
+
+#auditLog:
+[admin@shard2 ~]$
+
+Start mongo service and compete replication initalization:
+
+[admin@shard2 ~]$ sudo systemctl start mongod.service
+
+[admin@shard2 ~]$ mongosh
+Current Mongosh Log ID: 69f5c10400c11291eb44ba88
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2
+Using MongoDB:          8.2.7
+Using Mongosh:          2.8.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+test> rs.initiate()
+{
+  info2: 'no configuration specified. Using a default configuration for the set',
+  me: 'shard2:27017',
+  ok: 1
+}
+sh2 [direct: secondary] test> use admin
+switched to db admin
+
+sh2 [direct: primary] admin> db.createUser({
+| user: "admin",
+| pwd: "pass12345",
+| roles: [ {role: "root", db: "admin"} ]
+| })
+{ ok: 1 }
+
+sh2 [direct: primary] admin> db.auth("admin","pass12345")
+{ ok: 1 }
+sh2 [direct: primary] admin>
+
+
+Thsi completes the setup:
+
+Login to Mongos and add shards
+
+[admin@mongodb ~]$ mongosh --port 26000 -u admin -p pass12345 --authenticationDatabase admin
+
+
+[direct: mongos] test> sh.addShard("sh1/shard1:27017")
+{
+  shardAdded: 'sh1',
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777715663, i: 54 }),
+    signature: {
+      hash: Binary.createFromBase64('OrxHq7Cx+rdlZbnDUa4JdzgxiRc=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777715663, i: 54 })
+}
+[direct: mongos] test> sh.addShard("sh1/shard2:27017")
+MongoServerError[IllegalOperation]: A shard named sh1 containing the replica set 'sh1' already exists
+[direct: mongos] test> sh.addShard("sh2/shard2:27017")
+{
+  shardAdded: 'sh2',
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777715705, i: 31 }),
+    signature: {
+      hash: Binary.createFromBase64('FidsaQ3EQKZ7MtYF/fv5aB2ALAU=', 0),
+      keyId: Long('7635211577402064921')
+    }
+  },
+  operationTime: Timestamp({ t: 1777715705, i: 31 })
+}
+[direct: mongos] test>
 
 
 
