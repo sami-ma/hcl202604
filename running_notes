@@ -1899,5 +1899,133 @@ source: 192.168.94.132:27017
 }
 hcl [primary] test>
 
+Day -5
+======
+
+2/5
+
+Setup Sharding in Lab:
+
+Add configsrv details in /etc/hosts file
+
+[admin@mongodb ~]$ cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.94.130  shard1
+192.168.94.132  shard2
+192.168.94.129  mongodb
+192.168.94.131  configsrv
+[admin@mongodb ~]$
+
+
+
+On configsrv:  (setup mongodb and configure them as single node replicat with sharding configsrv role
+
+
+[admin@configsrv ~]$ cd software/
+[admin@configsrv software]$ cd mongodb8/
+[admin@configsrv mongodb8]$ ls
+mongodb-org-mongos-8.2.7-1.el9.x86_64.rpm
+mongodb-org-server-8.2.7-1.el9.x86_64.rpm
+[admin@configsrv mongodb8]$ sudo rpm -ivh mongodb-org-server-8.2.7-1.el9.x86_64.rpm
+[sudo] password for admin:
+warning: mongodb-org-server-8.2.7-1.el9.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID 4e7dca05: NOKEY
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-org-server-8.2.7-1.el9   ################################# [100%]
+Created symlink /etc/systemd/system/multi-user.target.wants/mongod.service → /usr/lib/systemd/system/mongod.service.
+[admin@configsrv mongodb8]$ cd ..
+[admin@configsrv software]$ ls
+mongodb7  mongodb-database-tools-rhel93-x86_64-100.16.1.rpm
+mongodb8  mongodb-mongosh-2.8.2.x86_64.rpm
+[admin@configsrv software]$ sudo rpm -ivh mongodb-mongosh-2.8.2.x86_64.rpm
+warning: mongodb-mongosh-2.8.2.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID d361cb16: NOKEY
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mongodb-mongosh-2.8.2-1.el8      ################################# [100%]
+[admin@configsrv software]$
+
+
+Copy the KeyFile to configsrv from pod:
+
+scp hclkey admin@192.168.94.131:~/
+The authenticity of host '192.168.94.131 (192.168.94.131)' can't be established.
+ED25519 key fingerprint is SHA256:KDIN4FfVDvqu+r5kOUesAwazHBHal+uhUsJrOeYdC3U.
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:1: 192.168.94.130
+    ~/.ssh/known_hosts:4: 192.168.94.132
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.94.131' (ED25519) to the list of known hosts.
+admin@192.168.94.131's password:
+hclkey         
+
+In Configsrv server copy the KeyFile to /etc/mongodb/pki directory and set permissions:
+
+[admin@configsrv software]$ sudo mkdir -p /etc/mongodb/pki
+[admin@configsrv software]$ sudo cp ~/hclkey /etc/mongodb/pki/
+[admin@configsrv software]$ sudo chown -R mongod:mongod /etc/mongodb
+[admin@configsrv software]$ sudo chmod 500 /etc/mongodb
+[admin@configsrv software]$ sudo chmod 500 /etc/mongodb/pki
+[admin@configsrv software]$ sudo chmod 400 /etc/mongodb/pki/hclkey
+[admin@configsrv software]$
+
+
+Setup replica set on configsrv  with singlenode
+
+replSetName:  configrep
+clusterRole:  configSrv
+
+Configuratin file on configsrv:
+
+[admin@configsrv software]$ cat /etc/mongod.conf
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+
+# how the process runs
+processManagement:
+  timeZoneInfo: /usr/share/zoneinfo
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+
+
+security:
+  authorization: enabled
+  keyFile: /etc/mongodb/pki/hclkey
+
+#operationProfiling:
+
+replication:
+    replSetName: configrep
+sharding:
+   clusterRole: configsvr
+## Enterprise-Only Options
+
+#auditLog:
+
+
+[admin@configsrv software]$
+
+
+
+
+
+
 
 
