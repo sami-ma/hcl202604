@@ -1752,4 +1752,136 @@ hcl [direct: primary] admin>
 
 hcl [direct: primary] admin>rs.status()
 
+Day 5
+====
+
+Reconfigure the ReplicaSet:
+
+Change the priority of node to 2:
+
+hcl [primary] test> myvar = rs.config()
+{
+  _id: 'hcl',
+  version: 5,
+  term: 3,
+  members: [
+    {
+      _id: 0,
+      host: 'mongodb:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 1,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    },
+    {
+      _id: 1,
+      host: '192.168.94.130:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 1,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    },
+    {
+      _id: 2,
+      host: '192.168.94.132:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 1,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    }
+  ],
+  protocolVersion: Long('1'),
+  writeConcernMajorityJournalDefault: true,
+  settings: {
+    chainingAllowed: true,
+    heartbeatIntervalMillis: 2000,
+    heartbeatTimeoutSecs: 10,
+    electionTimeoutMillis: 10000,
+    catchUpTimeoutMillis: -1,
+    catchUpTakeoverDelayMillis: 30000,
+    getLastErrorModes: {},
+    getLastErrorDefaults: { w: 1, wtimeout: 0 },
+    replicaSetId: ObjectId('69f34ca65dd889a3cff14568')
+  }
+}
+hcl [primary] test> myvar.members[0].priority = 2
+2
+hcl [primary] test> myvar
+{
+  _id: 'hcl',
+  version: 5,
+  term: 3,
+  members: [
+    {
+      _id: 0,
+      host: 'mongodb:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 2,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    },
+    {
+      _id: 1,
+      host: '192.168.94.130:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 1,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    },
+    {
+      _id: 2,
+      host: '192.168.94.132:27017',
+      arbiterOnly: false,
+      buildIndexes: true,
+      hidden: false,
+      priority: 1,
+      tags: {},
+      secondaryDelaySecs: Long('0'),
+      votes: 1
+    }
+  ],
+  protocolVersion: Long('1'),
+  writeConcernMajorityJournalDefault: true,
+  settings: {
+    chainingAllowed: true,
+    heartbeatIntervalMillis: 2000,
+    heartbeatTimeoutSecs: 10,
+    electionTimeoutMillis: 10000,
+    catchUpTimeoutMillis: -1,
+    catchUpTakeoverDelayMillis: 30000,
+    getLastErrorModes: {},
+    getLastErrorDefaults: { w: 1, wtimeout: 0 },
+    replicaSetId: ObjectId('69f34ca65dd889a3cff14568')
+  }
+}
+hcl [primary] test> rs.reconfig(myvar)
+{
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1777699884, i: 2 }),
+    signature: {
+      hash: Binary.createFromBase64('Jft6lz2dM6wDnKlMBknUVd1a8Uc=', 0),
+      keyId: Long('7634530069171404806')
+    }
+  },
+  operationTime: Timestamp({ t: 1777699884, i: 2 })
+}
+hcl [primary] test>
+
+
 
